@@ -10,17 +10,28 @@ plugins=(git colorize pip python brew macos zsh-syntax-highlighting zsh-autosugg
 source $ZSH/oh-my-zsh.sh
 
 alias c="clear"
-alias jr="cd ~/Code/Github; ls"
-alias jc="cd ~/Code; ls"
-function jd() {cd "$PWD/$*"; ls}
-alias jb="cd ../; ls"
-alias jh="cd ~; ls"
+
+function oc() {
+    if [ -z "$SSH_CLIENT" ] || [ -z "$SSH_TTY" ]
+    then
+        code $*
+    else
+        vim $*
+    fi
+}
+
+function jt() { cd "$PWD/$*"; ls }
+function jd() { cd $*; ls }
+alias jb="jd ../"
+alias jh="jd ~/"
+
+alias jr="jd ~/Code/Github"
+alias jc="jd ~/Code"
+
 alias rs="exec zsh"
 alias rg="go run main.go"
-alias oc='code .'
+alias oz="oc ~/.zshrc"
 alias o='open .'
-
-alias oz='code ~/.zshrc'
 
 alias os='ssh amaze@192.168.1.251'
 
